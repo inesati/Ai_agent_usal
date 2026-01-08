@@ -1,87 +1,87 @@
 /*
-  # Universidad de Salamanca AI Agent - Database Schema
+  Universidad de Salamanca - Esquema de Base de Datos del Agente AI
 
-  ## Overview
-  This migration creates the complete database structure for the USAL AI Agent system,
-  including student profiles, academic tasks, schedules, grades, and university resources.
+  ## Resumen
+  Esta migración crea la estructura completa de la base de datos para el sistema USAL AI Agent,
+  incluyendo perfiles de estudiantes, tareas académicas, horarios, calificaciones y recursos universitarios.
 
-  ## New Tables
+  ## Tablas Nuevas
 
   ### 1. `students`
-  Student profile information
-  - `id` (uuid, primary key) - Unique student identifier
-  - `user_id` (uuid, references auth.users) - Links to authentication
-  - `name` (text) - Student full name
-  - `email` (text) - Student email
-  - `faculty` (text) - Faculty/School name
-  - `degree` (text) - Degree program
-  - `year` (integer) - Current academic year
-  - `created_at` (timestamptz) - Record creation timestamp
+  Información de los estudiantes
+  - `id` (uuid, clave primaria) - Identificador único del estudiante
+  - `user_id` (uuid, referencias auth.users) - Vinculado al sistema de autenticación
+  - `name` (text) - Nombre completo
+  - `email` (text) - Correo electrónico
+  - `faculty` (text) - Facultad o escuela
+  - `degree` (text) - Programa de estudios
+  - `year` (integer) - Año académico actual
+  - `created_at` (timestamptz) - Fecha de creación del registro
 
   ### 2. `tasks`
-  Academic tasks, assignments, and exams
-  - `id` (uuid, primary key) - Unique task identifier
-  - `student_id` (uuid, foreign key) - References students table
-  - `title` (text) - Task title
-  - `description` (text) - Detailed description
-  - `type` (text) - Type: 'assignment', 'exam', 'project', 'reading'
-  - `subject` (text) - Subject/course name
-  - `due_date` (timestamptz) - Deadline
-  - `priority` (text) - Priority level: 'low', 'medium', 'high'
-  - `status` (text) - Status: 'pending', 'in_progress', 'completed'
-  - `created_at` (timestamptz) - Record creation timestamp
+  Tareas académicas, asignaciones y exámenes
+  - `id` (uuid, clave primaria) - Identificador único de la tarea
+  - `student_id` (uuid, clave foránea) - Referencia a la tabla students
+  - `title` (text) - Título de la tarea
+  - `description` (text) - Descripción detallada
+  - `type` (text) - Tipo: 'assignment', 'exam', 'project', 'reading'
+  - `subject` (text) - Nombre de la asignatura
+  - `due_date` (timestamptz) - Fecha límite
+  - `priority` (text) - Prioridad: 'low', 'medium', 'high'
+  - `status` (text) - Estado: 'pending', 'in_progress', 'completed'
+  - `created_at` (timestamptz) - Fecha de creación del registro
 
   ### 3. `schedules`
-  Class schedules and study time blocks
-  - `id` (uuid, primary key) - Unique schedule identifier
-  - `student_id` (uuid, foreign key) - References students table
-  - `title` (text) - Event title
-  - `type` (text) - Type: 'class', 'study', 'exam', 'meeting'
-  - `location` (text) - Physical location
-  - `day_of_week` (integer) - Day (0=Sunday, 6=Saturday)
-  - `start_time` (time) - Start time
-  - `end_time` (time) - End time
-  - `color` (text) - Display color
-  - `created_at` (timestamptz) - Record creation timestamp
+  Horarios de clases y bloques de estudio
+  - `id` (uuid, clave primaria) - Identificador único del horario
+  - `student_id` (uuid, clave foránea) - Referencia a la tabla students
+  - `title` (text) - Título del evento
+  - `type` (text) - Tipo: 'class', 'study', 'exam', 'meeting'
+  - `location` (text) - Ubicación física
+  - `day_of_week` (integer) - Día de la semana (0=domingo, 6=sábado)
+  - `start_time` (time) - Hora de inicio
+  - `end_time` (time) - Hora de finalización
+  - `color` (text) - Color para visualización
+  - `created_at` (timestamptz) - Fecha de creación del registro
 
   ### 4. `grades`
-  Student grades and academic performance
-  - `id` (uuid, primary key) - Unique grade identifier
-  - `student_id` (uuid, foreign key) - References students table
-  - `subject` (text) - Subject/course name
-  - `assessment_name` (text) - Name of assessment
-  - `grade` (numeric) - Grade value (0-10 scale)
-  - `weight` (numeric) - Weight percentage in final grade
-  - `date` (date) - Assessment date
-  - `created_at` (timestamptz) - Record creation timestamp
+  Calificaciones y desempeño académico
+  - `id` (uuid, clave primaria) - Identificador único de la calificación
+  - `student_id` (uuid, clave foránea) - Referencia a la tabla students
+  - `subject` (text) - Nombre de la asignatura
+  - `assessment_name` (text) - Nombre de la evaluación
+  - `grade` (numeric) - Valor de la calificación (escala 0-10)
+  - `weight` (numeric) - Peso porcentual en la nota final
+  - `date` (date) - Fecha de la evaluación
+  - `created_at` (timestamptz) - Fecha de creación del registro
 
   ### 5. `resources`
-  University resources (libraries, study rooms, cafeterias, etc.)
-  - `id` (uuid, primary key) - Unique resource identifier
-  - `name` (text) - Resource name
-  - `type` (text) - Type: 'library', 'study_room', 'cafeteria', 'computer_lab', 'other'
-  - `location` (text) - Physical location/building
-  - `description` (text) - Detailed description
-  - `opening_hours` (text) - Operating hours
-  - `capacity` (integer) - Maximum capacity
-  - `amenities` (text[]) - Available amenities/features
-  - `faculty` (text) - Associated faculty (if applicable)
-  - `created_at` (timestamptz) - Record creation timestamp
+  Recursos universitarios (bibliotecas, salas de estudio, cafeterías, etc.)
+  - `id` (uuid, clave primaria) - Identificador único del recurso
+  - `name` (text) - Nombre del recurso
+  - `type` (text) - Tipo: 'library', 'study_room', 'cafeteria', 'computer_lab', 'other'
+  - `location` (text) - Ubicación o edificio
+  - `description` (text) - Descripción detallada
+  - `opening_hours` (text) - Horario de atención
+  - `capacity` (integer) - Capacidad máxima
+  - `amenities` (text[]) - Servicios o características disponibles
+  - `faculty` (text) - Facultad asociada (si aplica)
+  - `created_at` (timestamptz) - Fecha de creación del registro
 
-  ## Security
+  ## Seguridad
   
-  All tables have Row Level Security (RLS) enabled with restrictive policies:
-  - Students can only access their own data
-  - All operations require authentication
-  - Each table has separate policies for SELECT, INSERT, UPDATE, and DELETE
+  Todas las tablas cuentan con Row Level Security (RLS) y políticas restrictivas:
+  - Los estudiantes solo pueden acceder a sus propios datos
+  - Todas las operaciones requieren autenticación
+  - Cada tabla tiene políticas separadas para SELECT, INSERT, UPDATE y DELETE
 
-  ## Important Notes
+  ## Notas Importantes
   
-  1. Uses UUID for all primary keys with automatic generation
-  2. Timestamps use `timestamptz` for timezone awareness
-  3. Foreign key constraints ensure referential integrity
-  4. Default values provided where appropriate
-  5. All tables use RLS for data security
+  1. Se utiliza UUID como clave primaria, con generación automática
+  2. Las fechas usan `timestamptz` para soporte de zonas horarias
+  3. Las claves foráneas garantizan integridad referencial
+  4. Se definen valores por defecto cuando es necesario
+  5. Todas las tablas aplican RLS para seguridad de los datos
 */
 
 -- Create students table
